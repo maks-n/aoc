@@ -6,25 +6,20 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 file_path = Path(sys.argv[1])
-password = 0
-dial_number = 50
+dial_position = 50
 dial_size = 100
+password = 0
 
-
-try:
-    with open(file_path, 'r') as file:
-        for line in file:
-            current_line = line.strip()
-            rotation = 0
-            if current_line[0] == 'L':
-                rotation -= int(current_line[1:])
-            elif current_line[0] == 'R':
-                rotation += int(current_line[1:])
-            dial_number = (dial_number + rotation) % dial_size
-            if dial_number == 0:
-                password += 1
-        print(password)
-except FileNotFoundError:
-    print(f"Error: The file '{file_path}' was not found.")
-except Exception as e:
-    print(f"An error occurred: {e}")
+with open(file_path, 'r') as file:
+    for line in file:
+        current_line = line.strip()
+        direction = current_line[0]
+        distance = int(current_line[1:])
+        for _ in range(distance):
+            if direction == 'L':
+                dial_position = (dial_position - 1 + dial_size) % dial_size
+            elif direction == 'R':
+                dial_position = (dial_position + 1) % dial_size
+        if dial_position == 0:
+            password += 1
+    print(password)
