@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 if len(sys.argv) < 2:
-   print("Usage: python gift_shop.py <path>")
+   print("Usage: python gift_shop_star.py <path>")
    sys.exit(1)
 
 file_path = Path(sys.argv[1])
