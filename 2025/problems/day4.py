@@ -1,0 +1,56 @@
+import sys
+
+def load_input():
+   day = sys.argv[0].replace('problems/day','')[:-3]
+   with open(f'{day}.txt', 'r') as file:
+      data = [line.rstrip() for line in file.readlines()]
+   return data
+
+def load_test_input():
+   day = sys.argv[0].replace('problems/day','')[:-3]
+   with open(f'{day}_test.txt', 'r') as file:
+      data = [line.rstrip() for line in file.readlines()]
+   return data
+
+
+# Part 1
+
+def get_num_adj(grid, r, c):
+    num_adj = 0
+    for dir_row in [-1, 0, 1]:
+        for dir_col in [-1, 0, 1]:
+            row, col = r+dir_row, c+dir_col
+            if row < 0 or row >= len(grid):
+                continue
+            if col < 0 or col >= len(grid[row]):
+                continue
+            if dir_row == 0 and dir_col == 0:
+                continue
+            if grid[row][col] == '@':
+                num_adj += 1
+    return num_adj
+
+def part1(data):
+    total = 0
+    for row in range(len(data)):
+        for col in range(len(data[row])):
+            if data[row][col] == '@' and get_num_adj(data, row, col) < 4:
+                total += 1
+    return total
+
+
+# Part 2
+
+def part2(data):
+    return None
+
+
+# main
+
+if __name__ == '__main__':
+   data = load_input()
+   data_test = load_test_input()
+   print(f'Part 1 test: {part1(data_test)}')
+   print(f'Part 1:      {part1(data)}')
+   print(f'Part 2 test: {part2(data_test)}')
+   print(f'Part 2:      {part2(data)}')
