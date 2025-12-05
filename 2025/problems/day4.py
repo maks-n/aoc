@@ -41,8 +41,27 @@ def part1(data):
 
 # Part 2
 
+def parse(data):
+    return [[val for val in row] for row in data]
+
+def find_removable(grid):
+    removable = set()
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            if grid[row][col] == '@' and get_num_adj(grid, row, col) < 4:
+                removable.add((row, col))
+    return removable
+
 def part2(data):
-    return None
+    grid = parse(data)
+    removable = find_removable(grid)
+    total = 0
+    while len(removable) > 0:
+        for row, col in removable:
+            grid[row][col] = '.'
+            total += 1
+        removable = find_removable(grid)
+    return total
 
 
 # main
